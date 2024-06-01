@@ -1,4 +1,3 @@
-// auth.controller.ts
 // Importing packges
 import Joi from 'joi';
 import bcrypt from 'bcryptjs';
@@ -12,7 +11,6 @@ import userModel from '../models/user.model';
 // Importing constants
 import httpStatusConstant from '../constants/http-message.constant';
 import responseMessageConstant from '../constants/response-message.constant';
-
 
 const handleRegister = async (req: Request, res: Response) => {
   try {
@@ -102,25 +100,16 @@ const handleLogin = async (req: Request, res: Response) => {
         message: responseMessageConstant.USER_NOT_FOUND
       });
     } else {
-      if (!userResponse.isManualAuth) {
-        return res.status(HttpStatusCode.BadRequest).json({
-          status: httpStatusConstant.BAD_REQUEST,
-          code: HttpStatusCode.BadRequest,
-          message: responseMessageConstant.ACCOUNT_ASSOCIATED_WITH_GOOGLE
-        });
-      }
-
       const isValidPassword = await bcrypt.compare(password, userResponse.password || '');
 
       if (isValidPassword) {
-        const { email, name, userId, profilePicture } = userResponse;
+        const { email, userId, username } = userResponse;
         res.status(HttpStatusCode.Ok).json({
           status: httpStatusConstant.OK,
           code: HttpStatusCode.Ok,
           userId: userId,
           email,
-          name,
-          profilePicture
+          username
         });
       } else {
         res.status(HttpStatusCode.Unauthorized).json({
@@ -137,61 +126,7 @@ const handleLogin = async (req: Request, res: Response) => {
   }
 };
 
-/**
- * @createdBy Kavin Nishanthan
- * @createdAt 2023-11-09
- * @description This function is used Google Signin
- */
-
-const handleGoogleSignIn = async (req: Request, res: Response) => {
-  try {
-    const { email, name, profilePicture } = req.body;
-
-    const existingUser = await userModel.findOne({ email });
-
-    if (existingUser) {
-      return res.status(HttpStatusCode.Ok).json({
-        status: httpStatusConstant.OK,
-        code: HttpStatusCode.Ok,
-        message: responseMessageConstant.ACCOUNT_ASSOCIATED_WITH_GOOGLE,
-        userId: existingUser.userId,
-        email: existingUser.email,
-        name: existingUser.name,
-        profilePicture: existingUser.profilePicture
-      });
-    }
-    const generatedUserId = generateUUID();
-
-    const newUser = new userModel({
-      userId: generatedUserId,
-      email,
-      name,
-      profilePicture,
-      isManualAuth: false
-    });
-
-    await newUser.save();
-
-    res.status(HttpStatusCode.Created).json({
-      status: httpStatusConstant.CREATED,
-      code: HttpStatusCode.Created,
-      message: responseMessageConstant.USER_CREATED,
-      userId: newUser.userId,
-      email: newUser.email,
-      name: newUser.name,
-      profilePicture: newUser.profilePicture
-    });
-  } catch (err: any) {
-    res.status(HttpStatusCode.InternalServerError).json({
-      status: httpStatusConstant.ERROR,
-      code: HttpStatusCode.InternalServerError,
-      message: responseMessageConstant.INVALID_CREDENTIALS
-    });
-  }
-};
-
 export default {
   handleRegister,
-  handleLogin,
-  handleGoogleSignIn
+  handleLogin
 };

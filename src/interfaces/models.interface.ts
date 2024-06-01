@@ -1,15 +1,22 @@
-// models.interface.ts
+interface IOrderHistory {
+  orderId: String;
+  items: {
+    name: string;
+    count: number;
+  }[];
+  totalCost: number;
+  orderDateTime: Date;
+}
+
 interface IUser {
-    userId?: string;
-    name?: string;
-    username?: string;
-    email?: string;
-    password?: string;
-    googleId?: string;
-    profilePicture?: string;
-    isManualAuth?: boolean;
-    createdAt?: Date;
-    updateAt?: Date;
-  }
-  
-  export { IUser };
+  userId?: string;
+  username: string;
+  email: string;
+  password: string;
+  address?: string;
+  orders?: IOrderHistory[];
+  createdAt?: Date;
+  updateAt?: Date;
+}
+
+export { IUser, IOrderHistory };
