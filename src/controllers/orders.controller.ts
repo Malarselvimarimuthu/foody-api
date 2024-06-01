@@ -1,6 +1,5 @@
 // Importing packges
 import Joi from 'joi';
-import bcrypt from 'bcryptjs';
 import { HttpStatusCode } from 'axios';
 import { Request, Response } from 'express';
 import { generateUUID } from '../helpers/uuid.helper';

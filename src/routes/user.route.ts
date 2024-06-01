@@ -8,6 +8,6 @@ import userController from '../controllers/user.controller';
 const router = Router();
 
 // orders routes
-router.post('/fetch/userDetails', userController.fetchUserDetails);
+router.get('/userDetails/:userId', userController.fetchUserDetails);
 
 export default router;
