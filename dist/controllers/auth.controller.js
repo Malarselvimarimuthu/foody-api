@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// auth.controller.ts
 // Importing packges
 const joi_1 = __importDefault(require("joi"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
@@ -102,23 +101,14 @@ const handleLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             });
         }
         else {
-            if (!userResponse.isManualAuth) {
-                return res.status(axios_1.HttpStatusCode.BadRequest).json({
-                    status: http_message_constant_1.default.BAD_REQUEST,
-                    code: axios_1.HttpStatusCode.BadRequest,
-                    message: response_message_constant_1.default.ACCOUNT_ASSOCIATED_WITH_GOOGLE
-                });
-            }
             const isValidPassword = yield bcryptjs_1.default.compare(password, userResponse.password || '');
             if (isValidPassword) {
-                const { email, name, userId, profilePicture } = userResponse;
+                const { email, userId } = userResponse;
                 res.status(axios_1.HttpStatusCode.Ok).json({
                     status: http_message_constant_1.default.OK,
                     code: axios_1.HttpStatusCode.Ok,
                     userId: userId,
-                    email,
-                    name,
-                    profilePicture
+                    email
                 });
             }
             else {
@@ -136,55 +126,7 @@ const handleLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             .json({ status: http_message_constant_1.default.ERROR, code: axios_1.HttpStatusCode.InternalServerError });
     }
 });
-/**
- * @createdBy Kavin Nishanthan
- * @createdAt 2023-11-09
- * @description This function is used Google Signin
- */
-const handleGoogleSignIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { email, name, profilePicture } = req.body;
-        const existingUser = yield user_model_1.default.findOne({ email });
-        if (existingUser) {
-            return res.status(axios_1.HttpStatusCode.Ok).json({
-                status: http_message_constant_1.default.OK,
-                code: axios_1.HttpStatusCode.Ok,
-                message: response_message_constant_1.default.ACCOUNT_ASSOCIATED_WITH_GOOGLE,
-                userId: existingUser.userId,
-                email: existingUser.email,
-                name: existingUser.name,
-                profilePicture: existingUser.profilePicture
-            });
-        }
-        const generatedUserId = (0, uuid_helper_1.generateUUID)();
-        const newUser = new user_model_1.default({
-            userId: generatedUserId,
-            email,
-            name,
-            profilePicture,
-            isManualAuth: false
-        });
-        yield newUser.save();
-        res.status(axios_1.HttpStatusCode.Created).json({
-            status: http_message_constant_1.default.CREATED,
-            code: axios_1.HttpStatusCode.Created,
-            message: response_message_constant_1.default.USER_CREATED,
-            userId: newUser.userId,
-            email: newUser.email,
-            name: newUser.name,
-            profilePicture: newUser.profilePicture
-        });
-    }
-    catch (err) {
-        res.status(axios_1.HttpStatusCode.InternalServerError).json({
-            status: http_message_constant_1.default.ERROR,
-            code: axios_1.HttpStatusCode.InternalServerError,
-            message: response_message_constant_1.default.INVALID_CREDENTIALS
-        });
-    }
-});
 exports.default = {
     handleRegister,
-    handleLogin,
-    handleGoogleSignIn
+    handleLogin
 };

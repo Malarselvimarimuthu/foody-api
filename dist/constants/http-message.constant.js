@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// http-message.constant.ts
 exports.default = {
     OK: 'Ok',
     SUCCESS: 'Success',

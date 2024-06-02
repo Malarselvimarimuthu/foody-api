@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// response-message.constant.ts
 exports.default = {
     // User messages
     USER_ID_REQUIRED: 'User Id is required!',
@@ -11,7 +10,10 @@ exports.default = {
     USERNAME_ALREADY_EXISTS: 'Username already exist!',
     USERNAME_AVAILABLE: 'Username available!',
     USER_UPDATED_SUCCESSFULLY: 'User updated successfully!',
-    ACCOUNT_ASSOCIATED_WITH_GOOGLE: 'Account associated with google, Please login with google!',
-    // Book messages
-    BOOK_ALREADY_EXISTS: 'Book already exist!'
+    // Order messages
+    YOUR_ORDER_HAS_BEEN_PLACED_SUCCESSFULLY: 'Your Order Has Been Placed Successfully',
+    ORDER_DELETED_SUCCESSFULLY: 'Your Order Has Been Deleted Successfully',
+    ORDER_NOT_FOUND: 'Order Not Found',
+    ORDERS_FETCHED_SUCCESSFULLY: 'Order Fetched Successfully',
+    NO_ORDERS_FOUND: 'NoOrders Found'
 };

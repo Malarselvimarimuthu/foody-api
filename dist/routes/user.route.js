@@ -6,10 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Importing packages
 const express_1 = require("express");
 // Importing controllers
-const auth_controller_1 = __importDefault(require("../controllers/auth.controller"));
+const user_controller_1 = __importDefault(require("../controllers/user.controller"));
 // Defining routers
 const router = (0, express_1.Router)();
-// auth routes
-router.post('/login', auth_controller_1.default.handleLogin);
-router.post('/register', auth_controller_1.default.handleRegister);
+// user routes
+router.get('/userDetails/:userId', user_controller_1.default.fetchUserDetails);
 exports.default = router;

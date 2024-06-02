@@ -6,10 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Importing packages
 const express_1 = require("express");
 // Importing controllers
-const auth_controller_1 = __importDefault(require("../controllers/auth.controller"));
+const orders_controller_1 = __importDefault(require("../controllers/orders.controller"));
 // Defining routers
 const router = (0, express_1.Router)();
-// auth routes
-router.post('/login', auth_controller_1.default.handleLogin);
-router.post('/register', auth_controller_1.default.handleRegister);
+// orders routes
+router.delete('/:userId/:orderId', orders_controller_1.default.deleteOrder);
+router.post('/placeOrder', orders_controller_1.default.handlePlaceOrder);
+router.get('/fetchOrders/:userId', orders_controller_1.default.fetchUserOrders);
 exports.default = router;
