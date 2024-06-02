@@ -51,8 +51,6 @@ const handleRegister = async (req: Request, res: Response) => {
         userId: generatedUserId,
         name,
         email,
-        isManualAuth: true,
-        profilePicture: '',
         password: encryptedPassword
       });
       res.status(HttpStatusCode.Created).json({ status: httpStatusConstant.CREATED, code: HttpStatusCode.Created });
