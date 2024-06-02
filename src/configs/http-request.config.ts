@@ -1,4 +1,3 @@
-// http-request.config.ts
 // Importing axios
 import axios from 'axios';
 

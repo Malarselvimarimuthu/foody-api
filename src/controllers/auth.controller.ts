@@ -98,16 +98,16 @@ const handleLogin = async (req: Request, res: Response) => {
         message: responseMessageConstant.USER_NOT_FOUND
       });
     } else {
+      
       const isValidPassword = await bcrypt.compare(password, userResponse.password || '');
 
       if (isValidPassword) {
-        const { email, userId, username } = userResponse;
+        const { email, userId } = userResponse;
         res.status(HttpStatusCode.Ok).json({
           status: httpStatusConstant.OK,
           code: HttpStatusCode.Ok,
           userId: userId,
-          email,
-          username
+          email
         });
       } else {
         res.status(HttpStatusCode.Unauthorized).json({
