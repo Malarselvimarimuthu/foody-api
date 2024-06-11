@@ -55,7 +55,7 @@ const handleRegister = (req, res) => __awaiter(void 0, void 0, void 0, function*
             const generatedUserId = (0, uuid_helper_1.generateUUID)();
             yield user_model_1.default.create({
                 userId: generatedUserId,
-                name,
+                username: name,
                 email,
                 password: encryptedPassword
             });
@@ -69,8 +69,8 @@ const handleRegister = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 /**
- * @createdBy Kavin Nishanthan
- * @createdAt 2023-11-09
+ * @createdBy Malarselvi
+ * @createdAt 06/10/2024
  * @description This function is used to handle user login
  */
 const handleLogin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

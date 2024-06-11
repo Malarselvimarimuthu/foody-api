@@ -128,7 +128,7 @@ const deleteOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             userId: joi_1.default.string().required(),
             orderId: joi_1.default.string().required()
         });
-        const { error } = validationSchema.validate(req.body);
+        const { error } = validationSchema.validate(req.params);
         if (error) {
             return res.status(axios_1.HttpStatusCode.BadRequest).json({
                 status: http_message_constant_1.default.BAD_REQUEST,

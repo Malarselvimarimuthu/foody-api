@@ -49,7 +49,7 @@ const handleRegister = async (req: Request, res: Response) => {
       const generatedUserId = generateUUID();
       await userModel.create({
         userId: generatedUserId,
-        name,
+        username:name,
         email,
         password: encryptedPassword
       });
@@ -63,8 +63,8 @@ const handleRegister = async (req: Request, res: Response) => {
 };
 
 /**
- * @createdBy Kavin Nishanthan
- * @createdAt 2023-11-09
+ * @createdBy Malarselvi
+ * @createdAt 06/10/2024
  * @description This function is used to handle user login
  */
 

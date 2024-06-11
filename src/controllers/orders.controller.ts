@@ -138,7 +138,7 @@ const deleteOrder = async (req: Request, res: Response) => {
       orderId: Joi.string().required()
     });
 
-    const { error } = validationSchema.validate(req.body);
+    const { error } = validationSchema.validate(req.params);
 
     if (error) {
       return res.status(HttpStatusCode.BadRequest).json({
@@ -166,7 +166,7 @@ const deleteOrder = async (req: Request, res: Response) => {
       });
     }
 
-    const orderIndex = user.orders.findIndex((order: any) => order.orderId === orderId);
+    const orderIndex = user.orders.findIndex((order) => order.orderId === orderId);
 
     if (orderIndex === -1) {
       return res.status(HttpStatusCode.NotFound).json({
